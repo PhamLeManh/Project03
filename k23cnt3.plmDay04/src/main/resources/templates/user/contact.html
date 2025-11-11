@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user-layout}">
+<head>
+    <title>Liên hệ</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container py-5">
+
+    <!-- 🔹 Tiêu đề trang -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary mb-3">
+            <i class="fas fa-envelope-open-text me-2"></i>Liên hệ
+        </h1>
+        <p class="lead text-muted">Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7</p>
+        <hr class="w-25 mx-auto text-primary">
+    </div>
+
+    <div class="row g-4">
+        <!-- 📨 Form gửi liên hệ -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4 fw-semibold text-primary">
+                        <i class="fas fa-paper-plane me-2"></i>Gửi tin nhắn cho chúng tôi
+                    </h5>
+
+                    <form th:action="@{/contact/send}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Họ và tên *</label>
+                                <input type="text" class="form-control rounded-3 shadow-sm" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control rounded-3 shadow-sm" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Tiêu đề *</label>
+                            <input type="text" class="form-control rounded-3 shadow-sm" id="subject" name="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Nội dung *</label>
+                            <textarea class="form-control rounded-3 shadow-sm" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4 rounded-pill">
+                            <i class="fas fa-paper-plane me-2"></i>Gửi tin nhắn
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📞 Thông tin liên hệ -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 rounded-4 mb-3">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold text-primary mb-3">
+                        <i class="fas fa-info-circle me-2"></i>Thông tin liên hệ
+                    </h5>
+
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="fas fa-map-marker-alt text-primary me-3 mt-1"></i>
+                        <div>
+                            <h6 class="mb-1">Địa chỉ</h6>
+                            <p class="text-muted mb-0">Số 123, Đường ABC, Quận XYZ, TP. Hà Nội</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="fas fa-phone text-primary me-3 mt-1"></i>
+                        <div>
+                            <h6 class="mb-1">Điện thoại</h6>
+                            <p class="text-muted mb-0">+84 123 456 789</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="fas fa-envelope text-primary me-3 mt-1"></i>
+                        <div>
+                            <h6 class="mb-1">Email</h6>
+                            <p class="text-muted mb-0">contact@k23crt3pim.com</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-clock text-primary me-3 mt-1"></i>
+                        <div>
+                            <h6 class="mb-1">Thời gian làm việc</h6>
+                            <p class="text-muted mb-0">Thứ 2 - Thứ 6: 8:00 - 17:00</p>
+                            <p class="text-muted mb-0">Thứ 7: 8:00 - 12:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🌐 Mạng xã hội -->
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body text-center">
+                    <h6 class="card-title fw-semibold text-primary mb-3">Theo dõi chúng tôi</h6>
+                    <div class="d-flex justify-content-center gap-3 mt-2">
+                        <a href="#" class="text-primary"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-info"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-danger"><i class="fab fa-youtube fa-2x"></i></a>
+                        <a href="#" class="text-primary"><i class="fab fa-linkedin fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

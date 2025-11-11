@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user-layout}">
+<head>
+    <title>Giới thiệu</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container py-5">
+
+    <!-- 🔹 Tiêu đề trang -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary mb-3">
+            <i class="fas fa-users me-2"></i>Về Chúng Tôi
+        </h1>
+        <p class="lead text-muted">K23CRT3 PIM - Hệ thống quản lý thông tin sản phẩm chuyên nghiệp</p>
+        <hr class="w-25 mx-auto text-primary">
+    </div>
+
+    <!-- 🧩 Giới thiệu -->
+    <div class="card shadow-sm border-0 rounded-4 mb-5">
+        <div class="card-body p-4">
+            <h3 class="card-title fw-semibold text-primary mb-3">
+                <i class="fas fa-info-circle me-2"></i>Giới thiệu
+            </h3>
+            <p class="card-text text-muted">
+                <strong>K23CRT3 PIM</strong> là hệ thống quản lý thông tin sản phẩm được phát triển bởi nhóm <strong>K23CRT3</strong>.
+                Hệ thống cung cấp giải pháp toàn diện cho việc quản lý danh mục sản phẩm, thông tin chi tiết
+                và các tính năng quản trị hiện đại, giúp doanh nghiệp tiết kiệm thời gian và tối ưu quy trình quản lý.
+            </p>
+        </div>
+    </div>
+
+    <!-- 🎯 Sứ mệnh & Tầm nhìn -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4">
+                <i class="fas fa-bullseye fa-3x text-primary mb-3"></i>
+                <h5 class="fw-semibold text-dark">Sứ mệnh</h5>
+                <p class="text-muted mb-0">
+                    Cung cấp giải pháp quản lý sản phẩm hiệu quả, dễ sử dụng
+                    và tiết kiệm thời gian cho doanh nghiệp ở mọi quy mô.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4">
+                <i class="fas fa-eye fa-3x text-success mb-3"></i>
+                <h5 class="fw-semibold text-dark">Tầm nhìn</h5>
+                <p class="text-muted mb-0">
+                    Trở thành nền tảng quản lý sản phẩm hàng đầu được các doanh nghiệp tin dùng
+                    và ứng dụng rộng rãi tại Việt Nam.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚀 Tính năng nổi bật -->
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+            <h3 class="card-title fw-semibold text-primary mb-4">
+                <i class="fas fa-star me-2"></i>Tính năng nổi bật
+            </h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Quản lý sản phẩm</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Phân loại danh mục</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Tìm kiếm thông minh</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Giao diện responsive</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Báo cáo thống kê</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Quản lý đa người dùng</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Backup dữ liệu</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>API tích hợp</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Bảo mật cao</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

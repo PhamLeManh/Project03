@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-layout}">
+<head>
+    <title>Bảng điều khiển</title>
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --success-color: #1cc88a;
+            --warning-color: #f6c23e;
+            --info-color: #36b9cc;
+            --danger-color: #e74a3b;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+            --shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Alert Styling */
+        .alert {
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .alert-success {
+            background-color: rgba(28, 200, 138, 0.1);
+            color: #155724;
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-header h2 {
+            color: var(--dark-color);
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .stat-card.bg-primary::before {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card.bg-success::before {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card.bg-warning::before {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card.bg-info::before {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .stat-card .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card small {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            opacity: 0.7;
+        }
+
+        /* Content Cards */
+        .content-card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .content-card:hover {
+            box-shadow: 0 0.35rem 1.5rem rgba(0, 0, 0, 0.15);
+        }
+
+        .content-card .card-header {
+            background-color: white;
+            border-bottom: 1px solid #e3e6f0;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem 0.75rem 0 0 !important;
+        }
+
+        .content-card .card-header h5 {
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .content-card .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Featured Products */
+        .product-item {
+            border: 1px solid #e3e6f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+        }
+
+        .product-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .product-item img {
+            border-radius: 0.35rem;
+        }
+
+        .product-item h6 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .product-item .text-muted {
+            font-weight: 600;
+            color: var(--primary-color) !important;
+        }
+
+        /* Quick Actions */
+        .btn-outline-primary, .btn-outline-info, .btn-outline-success {
+            border-radius: 0.5rem;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-success:hover {
+            transform: translateX(5px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            padding: 2rem 1rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 1rem;
+            }
+
+            .stat-card .card-body {
+                padding: 1rem;
+            }
+
+            .content-card .card-body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid px-4">
+
+    <!-- ✅ Thông báo thành công -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mt-3 animate-fade-in" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- ✅ Tiêu đề chính -->
+    <div class="page-header d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold mb-0"><i class="fas fa-tachometer-alt me-2 text-primary"></i> Bảng điều khiển</h2>
+        <a th:href="@{/admin/products/create}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Thêm sản phẩm
+        </a>
+    </div>
+
+    <!-- ✅ Thống kê tổng quan -->
+    <div class="row g-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-primary text-white shadow-sm animate-fade-in">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title mb-0" th:text="${totalProducts != null ? totalProducts : 0}">0</h4>
+                        <small>Tổng sản phẩm</small>
+                    </div>
+                    <i class="fas fa-box fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-success text-white shadow-sm animate-fade-in delay-1">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title mb-0" th:text="${totalCategories != null ? totalCategories : 0}">0</h4>
+                        <small>Danh mục</small>
+                    </div>
+                    <i class="fas fa-tags fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-warning text-white shadow-sm animate-fade-in delay-2">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title mb-0">45</h4>
+                        <small>Người dùng</small>
+                    </div>
+                    <i class="fas fa-users fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card bg-info text-white shadow-sm animate-fade-in delay-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="card-title mb-0">1,234</h4>
+                        <small>Lượt truy cập</small>
+                    </div>
+                    <i class="fas fa-chart-line fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Sản phẩm nổi bật + Thao tác nhanh -->
+    <div class="row mt-4">
+        <!-- Sản phẩm nổi bật -->
+        <div class="col-lg-8 mb-4">
+            <div class="card content-card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-star text-warning me-2"></i> Sản phẩm nổi bật</h5>
+                </div>
+                <div class="card-body">
+                    <div th:if="${featuredProducts == null or featuredProducts.empty}" class="empty-state text-center">
+                        <i class="fas fa-box-open text-muted"></i>
+                        <p class="text-muted mb-0">Chưa có sản phẩm nổi bật nào.</p>
+                    </div>
+
+                    <div th:if="${featuredProducts != null and !featuredProducts.empty}" class="row">
+                        <div th:each="product : ${featuredProducts}" class="col-md-6 mb-3">
+                            <div class="product-item d-flex align-items-center">
+                                <img th:src="${product.imageUrl != null ? product.imageUrl : 'https://via.placeholder.com/60'}"
+                                     class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1" th:text="${product.name}">Product Name</h6>
+                                    <p class="text-muted mb-0"
+                                       th:text="${product.price != null ? #numbers.formatDecimal(product.price, 0, 0) + ' ₫' : '0 ₫'}">
+                                        0 ₫
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thao tác nhanh -->
+        <div class="col-lg-4 mb-4">
+            <div class="card content-card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="fas fa-bolt text-primary me-2"></i> Thao tác nhanh</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a th:href="@{/admin/products}" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-2"></i> Danh sách sản phẩm
+                        </a>
+                        <a th:href="@{/admin/categories}" class="btn btn-outline-info">
+                            <i class="fas fa-tags me-2"></i> Quản lý danh mục
+                        </a>
+                        <a th:href="@{/admin/categories/create}" class="btn btn-outline-success">
+                            <i class="fas fa-plus me-2"></i> Thêm danh mục
+                        </a>
+                        <a th:href="@{/admin/products/create}" class="btn btn-primary mt-2">
+                            <i class="fas fa-plus-circle me-2"></i> Thêm sản phẩm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Add scroll animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('.animate-fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(10px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    });
+</script>
+</body>
+</html>

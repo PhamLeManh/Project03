@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user-layout}">
+<head>
+    <title>Sản phẩm</title>
+</head>
+
+<body>
+<div layout:fragment="content" class="container py-4">
+
+    <!-- 🔍 Thanh tiêu đề & tìm kiếm -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2 class="fw-bold text-primary mb-0">
+                <i class="fas fa-boxes me-2"></i>Danh sách sản phẩm
+            </h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <form th:action="@{/products/search}" method="get" class="input-group shadow-sm rounded-3">
+                <input type="text" class="form-control border-0"
+                       name="keyword" placeholder="Tìm kiếm sản phẩm..." />
+                <button class="btn btn-primary px-4" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🛍 Danh sách sản phẩm -->
+    <div class="row g-4">
+        <div th:each="product : ${products}" class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-shadow">
+                <img th:src="${product.imageUrl != null ? product.imageUrl : 'https://via.placeholder.com/400x250'}"
+                     class="card-img-top" alt="Ảnh sản phẩm"
+                     style="height: 200px; object-fit: cover;">
+
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-semibold text-truncate"
+                        th:text="${product.name}">Tên sản phẩm</h5>
+
+                    <p class="card-text text-muted small flex-grow-1"
+                       th:text="${product.description}">Mô tả sản phẩm...</p>
+
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h6 text-primary fw-bold mb-0"
+                                  th:text="|${#numbers.formatDecimal(product.price, 0, 0)} ₫|">1,000,000 ₫</span>
+                            <span th:if="${product.featured}" class="badge bg-warning text-dark">
+                                <i class="fas fa-star me-1"></i> Nổi bật
+                            </span>
+                        </div>
+
+                        <div class="d-grid mt-3">
+                            <button type="button" class="btn btn-outline-primary rounded-pill">
+                                <i class="fas fa-shopping-cart me-1"></i> Thêm vào giỏ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚫 Không có sản phẩm -->
+    <div th:if="${#lists.isEmpty(products)}" class="text-center py-5">
+        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+        <h4 class="text-muted fw-light">Không có sản phẩm nào</h4>
+        <p class="text-muted">Hiện tại chưa có sản phẩm để hiển thị.</p>
+    </div>
+
+</div>
+</body>
+</html>

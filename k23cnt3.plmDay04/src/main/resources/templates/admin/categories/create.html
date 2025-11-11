@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/admin-layout}">
+<head>
+    <title>Thêm danh mục mới</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Thêm danh mục mới</h2>
+        <a th:href="@{/admin/categories}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <!-- Flash Messages -->
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form th:action="@{/admin/categories/create}" th:object="${category}" method="post">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Tên danh mục *</label>
+                            <input type="text" class="form-control" id="name"
+                                   th:field="*{name}" required>
+                            <div class="form-text">Tên danh mục phải là duy nhất.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <textarea class="form-control" id="description"
+                                      th:field="*{description}" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
+                    <button type="submit" class="btn btn-primary">Thêm danh mục</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

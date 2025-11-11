@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user-layout}">
+<head>
+    <title>Trang chủ</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #00bfff;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --text-color: #333;
+            --text-light: #6c757d;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --shadow-hover: 0 10px 25px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .jumbotron {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            text-align: center;
+            padding: 6rem 2rem;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .jumbotron::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .jumbotron h1 {
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            font-size: 3.2rem;
+            position: relative;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .jumbotron p.lead {
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .jumbotron hr {
+            border-top: 2px solid rgba(255,255,255,0.5);
+            width: 60%;
+            margin: 2rem auto;
+        }
+
+        .jumbotron .btn {
+            font-weight: 600;
+            padding: 0.9rem 2.2rem;
+            border-radius: 2.5rem;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .jumbotron .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Featured Products */
+        .card {
+            transition: var(--transition);
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-img-top {
+            height: 220px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark-color);
+        }
+
+        .card-text {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-top: auto;
+        }
+
+        /* Info Cards */
+        .info-card {
+            transition: var(--transition);
+            border: none;
+            border-radius: 1.2rem;
+            background-color: #fff;
+            box-shadow: var(--shadow);
+            height: 100%;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .info-card i {
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .info-card .card-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .info-card .card-text {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .jumbotron {
+                padding: 4rem 1.5rem;
+            }
+
+            .jumbotron h1 {
+                font-size: 2.5rem;
+            }
+
+            .jumbotron p.lead {
+                font-size: 1.2rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation for elements */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+
+    <!-- Hero Section -->
+    <div class="jumbotron mb-5 animate-fade-in">
+        <h1 class="display-5 fw-bold">Chào mừng đến với K23CRT3 PLM</h1>
+        <p class="lead mb-3">Hệ thống quản lý thông tin sản phẩm chuyên nghiệp</p>
+        <hr class="my-4">
+        <p class="mb-4">Quản lý sản phẩm, danh mục và thông tin một cách hiệu quả.</p>
+        <a class="btn btn-light btn-lg shadow-sm" th:href="@{/admin}" role="button">
+            <i class="fas fa-cog me-2"></i>Truy cập quản trị
+        </a>
+    </div>
+
+    <!-- Featured Products -->
+    <div th:if="${featuredProducts != null and !featuredProducts.empty}" class="mb-5">
+        <div class="section-header">
+            <h2>Sản phẩm nổi bật</h2>
+        </div>
+        <div class="row">
+            <div th:each="product,iter : ${featuredProducts}" class="col-md-3 mb-4">
+                <div class="card h-100 animate-fade-in" th:classappend="${iter.index > 0 ? 'delay-' + iter.index : ''}">
+                    <img th:src="${product.imageUrl != null ? product.imageUrl : 'https://via.placeholder.com/300'}"
+                         class="card-img-top" alt="Product Image">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+                        <p class="card-text flex-grow-1" th:text="${product.description}">Product description...</p>
+                        <div class="price-tag mt-auto"
+                             th:text="${product.price != null ? #numbers.formatDecimal(product.price, 0, 0) + ' ₫' : '0 ₫'}">
+                            0 ₫
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="row g-4 text-center mb-5">
+        <div class="col-md-4">
+            <div class="info-card animate-fade-in delay-1">
+                <i class="fas fa-box fa-3x mb-3"></i>
+                <h5 class="card-title">Quản lý sản phẩm</h5>
+                <p class="card-text">Theo dõi thông tin sản phẩm đầy đủ và chi tiết với giao diện trực quan.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card animate-fade-in delay-2">
+                <i class="fas fa-tags fa-3x mb-3"></i>
+                <h5 class="card-title">Danh mục</h5>
+                <p class="card-text">Phân loại sản phẩm rõ ràng, dễ tìm kiếm và quản lý theo từng nhóm.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-card animate-fade-in delay-3">
+                <i class="fas fa-chart-bar fa-3x mb-3"></i>
+                <h5 class="card-title">Báo cáo & Phân tích</h5>
+                <p class="card-text">Theo dõi và phân tích dữ liệu hiệu quả với các biểu đồ trực quan.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add scroll animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('.animate-fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    });
+</script>
+</body>
+</html>
